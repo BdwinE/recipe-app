@@ -8,7 +8,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ### Authentication 
 
-Sign up, log in, and logout.
+Sign up, log in, and log out.
 
 ### Recipes
 
@@ -16,15 +16,15 @@ Create, delete and update recipes.
 
 ### Shopping List
 
-Add, remove or update ingredients from shopping list. Can also add ingredients straight from a recipe.
+Add, remove or update ingredients from the shopping list. Can also add ingredients straight from a recipe.
 
 ### Storage
 
-Save and fetch recipes from database.
+Save and fetch recipes from a firebase database.
 
 ## Development server
 
-The app is hosted [here](https://recipe-app-project-98dbb.web.app/auth) so you can see how the it works without running it on a development server.
+The app is hosted [here](https://recipe-app-project-98dbb.web.app/auth) so you can see how it works without running it on a development server.
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
