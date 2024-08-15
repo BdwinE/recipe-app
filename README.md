@@ -1,4 +1,6 @@
-# RecipeApp
+# Recipe-App
+
+This is a recipe book application build using Angular, showcasing my skills in frontend development. The App allows users to browse and manage recipes with ease.
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.1.3.
 
