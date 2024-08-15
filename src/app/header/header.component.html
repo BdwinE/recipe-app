@@ -1,0 +1,72 @@
+<nav class="navbar bg-body-tertiary">
+  <div class="container-fluid">
+    <div class="navbar-expand" style="width: 100%">
+      <ul class="navbar-nav ms-2 align-items-center" style="width: 100%">
+        <li class="nav-item pt-1">
+          <h5>Recipe Book</h5>
+        </li>
+        <li
+          class="nav-item ps-4"
+          style="cursor: pointer"
+          [routerLink]="['/recipes']"
+          *ngIf="loggedIn"
+        >
+          <a
+            class="nav-link"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            >Recipes</a
+          >
+        </li>
+        <li
+          class="nav-item"
+          style="cursor: pointer"
+          [routerLink]="['/shopping-list']"
+        >
+          <a class="nav-link" routerLinkActive="active">Shopping List</a>
+        </li>
+        <li class="nav-item dropdown" appShowDropdown *ngIf="loggedIn">
+          <a
+            class="nav-link dropdown-toggle"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Manage
+          </a>
+          <ul class="dropdown-menu" name="dropdown">
+            <li>
+              <a
+                class="dropdown-item"
+                (click)="onSaveData()"
+                style="cursor: pointer"
+                >Save Data</a
+              >
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                style="cursor: pointer"
+                (click)="onFetchData()"
+                >Fetch Data</a
+              >
+            </li>
+          </ul>
+        </li>
+        <li
+          class="nav-item ps-4"
+          style="cursor: pointer"
+          [routerLink]="['/auth']"
+        >
+          <a
+            class="nav-link"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            (click)="onLogOut()"
+            >{{ loggedIn ? "Log Out" : "Log In" }}</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

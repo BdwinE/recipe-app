@@ -1,0 +1,303 @@
+<div>
+  <div class="row mt-md-1 mt-4 mt-sm-5">
+    <div class="mb-1">
+      <h2>{{ editMode ? "Edit Recipe" : "New Recipe" }}</h2>
+    </div>
+    <hr />
+    <form (ngSubmit)="onSubmitNewRecipe()" [formGroup]="fG">
+      <div class="row">
+        <div class="form-group">
+          <div class="row" formGroupName="recipeFG">
+            <div class="col-sm-12">
+              <label>Recipe Name</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Recipe Name"
+                formControlName="recipeName"
+              />
+
+              <label>Recipe Description</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Recipe Description"
+                formControlName="recipeDescription"
+              />
+
+              <label>Image Path</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Image Path"
+                formControlName="recipeImagePath"
+              />
+              <img
+                [src]="this.fG.get('recipeFG').get('recipeImagePath').value"
+                style="max-height: 150px"
+              />
+            </div>
+          </div>
+
+          <div class="row" [formGroupName]="'ingredientsFG'">
+            <div class="col-12 col-sm-6">
+              <label>Ingredient</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Ingredient"
+                formControlName="ingredientName"
+              />
+            </div>
+            <div class="col-12 col-sm-3">
+              <label>Amount</label>
+              <input
+                type="number"
+                class="form-control"
+                placeholder="Amount"
+                formControlName="ingredientAmount"
+              />
+            </div>
+            <div class="col-sm-3 col-12">
+              <div class="row">
+                <label>Add Ingredient</label>
+              </div>
+              <div class="row">
+                <button
+                  class="btn btn-success"
+                  type="button"
+                  [disabled]="
+                    !this.fG.get('ingredientsFG').get('ingredientName').valid ||
+                    !this.fG.get('ingredientsFG').get('ingredientAmount').valid
+                  "
+                  (click)="
+                    addIngredientToList(
+                      this.fG.get('ingredientsFG').get('ingredientName').value,
+                      this.fG.get('ingredientsFG').get('ingredientAmount').value
+                    )
+                  "
+                >
+                  Add
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-3 px-4">
+        <div class="col-sm-6">
+          <button
+            type="submit"
+            [disabled]="
+              !this.fG.get('recipeFG').valid ||
+              !this.fG.get('ingredientsFG').get('recipeIngredientsArray').valid
+            "
+            class="btn btn-primary text-center justify-content-center"
+          >
+            Submit
+          </button>
+        </div>
+        <div class="col-sm-6">
+          <button
+            [routerLink]="['../']"
+            type="button"
+            class="btn btn-danger text-center justify-content-center"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+
+      <div
+        formGroupName="ingredientsFG"
+        [ngClass]="
+          !this.fG.get('ingredientsFG').get('recipeIngredientsArray').valid &&
+          (this.fG.get('ingredientsFG').get('ingredientName').touched ||
+            this.fG.get('ingredientsFG').get('ingredientAmount').touched)
+            ? 'border border-danger'
+            : ''
+        "
+      >
+        <div formArrayName="recipeIngredientsArray">
+          <div class="row mt-2">
+            <h4>Recipe Ingredients:</h4>
+          </div>
+          <div
+            class="row"
+            [ngClass]="
+              ingredientContol.value.remove
+                ? 'text-decoration-line-through'
+                : ''
+            "
+            *ngFor="let ingredientContol of getIngredientControls(); index as i"
+          >
+            <div class="col-sm-2">
+              <p>
+                {{ ingredientContol.value.name }}
+              </p>
+            </div>
+            <div class="col-sm-2">
+              <p>{{ ingredientContol.value.amount }}</p>
+            </div>
+            <div class="col-sm-2">
+              <button
+                class="btn-close btn-danger"
+                (click)="removeIngredient(i)"
+              ></button>
+            </div>
+          </div>
+          <span
+            *ngIf="
+              !this.fG.get('ingredientsFG').get('recipeIngredientsArray').valid
+            "
+            >Please Add atleast one recipe</span
+          >
+        </div>
+
+        <!-- <div>
+          <div class="row mt-2">
+            <h4>Ingredients To Add:</h4>
+          </div>
+          <div
+            class="row"
+            formArrayName="ingredientsToAddArray"
+            *ngFor="let ingredient of bufferAddIngredients; index as i"
+          >
+            <div class="col-sm-2">
+              <p>{{ ingredient.name }}</p>
+              <input [formControlName]="i" />
+            </div>
+            <div class="col-sm-2">
+              <p>{{ ingredient.amount }}</p>
+              <input [formControlName]="i" />
+            </div>
+            <div class="col-sm-2">
+              <button
+                class="btn-close btn-danger"
+                (click)="removeIngredient(i, true)"
+              ></button>
+            </div>
+          </div>
+        </div> -->
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- <div *ngIf="editMode; else editForm">
+  <div class="row mt-md-2 mt-4 mt-sm-5">
+    <div *ngIf="!editMode; else editRecipeHeading">
+      <h2>New Recipe</h2>
+    </div>
+    <hr />
+    <div class="col">
+      <form ngNativeValidate #form>
+        <div class="row">
+          <div class="form-group">
+            <div class="row">
+              <div class="col-sm-12">
+                <label>Recipe Name</label>
+                <input
+                  #RecipeName
+                  required
+                  type="text"
+                  class="form-control"
+                  placeholder="Recipe Name"
+                />
+
+                <label>Recipe Description</label>
+                <input
+                  #RecipeDescription
+                  required
+                  type="text"
+                  class="form-control"
+                  placeholder="Recipe Description"
+                />
+
+                <label>Image Path</label>
+                <input
+                  required
+                  #RecipeImagePath
+                  type="text"
+                  class="form-control"
+                  placeholder="Image Path"
+                />
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-12 col-sm-6">
+                <label>Ingredient</label>
+                <input
+                  #RecipeIngredientName
+                  type="text"
+                  class="form-control"
+                  placeholder="Ingredient"
+                />
+              </div>
+              <div class="col-12 col-sm-2">
+                <label>Amount</label>
+                <input
+                  #RecipeIngredientAmount
+                  type="text"
+                  class="form-control"
+                  placeholder="Amount"
+                />
+              </div>
+              <div class="col-sm-3 col-12">
+                <div class="row">
+                  <label>Add Ingredient</label>
+                </div>
+                <div class="row mx-2">
+                  <button
+                    class="btn btn-success"
+                    (click)="
+                      addIngredientToList(
+                        RecipeIngredientName.value,
+                        RecipeIngredientAmount.value
+                      )
+                    "
+                  >
+                    Add
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-3 px-4">
+          <button
+            type="submit"
+            (click)="form.checkValidity() ? onSubmitNewRecipe() : null"
+            class="btn btn-primary text-center justify-content-center"
+          >
+            Submit
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div *ngIf="!editMode; else recipeIngredients"></div>
+  <div class="row mt-2">
+    <h4>Ingredients To Add:</h4>
+  </div>
+  <div class="row" *ngFor="let ingredient of bufferIngredients; index as i">
+    <div class="col-sm-2">
+      <p>{{ ingredient.name }}</p>
+    </div>
+    <div class="col-sm-2">
+      <p>{{ ingredient.amount }}</p>
+    </div>
+    <div class="col-sm-2">
+      <button
+        class="btn-close btn-danger"
+        (click)="removeIngredient(i)"
+      ></button>
+    </div>
+  </div>
+</div>
+
+
+<ng-template #editRecipeHeading>
+  <h2>Edit Recipe</h2>
+</ng-template> -->
