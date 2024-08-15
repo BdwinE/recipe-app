@@ -4,7 +4,27 @@ This is a recipe book application build using Angular, showcasing my skills in f
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.1.3.
 
+## Key Features 
+
+### Authentication 
+
+Sign up, log in, and logout.
+
+### Recipes
+
+Create, delete and update recipes.
+
+### Shopping List
+
+Add, remove or update ingredients from shopping list. Can also add ingredients straight from a recipe.
+
+### Storage
+
+Save and fetch recipes from database.
+
 ## Development server
+
+The app is hosted [here](https://recipe-app-project-98dbb.web.app/auth) so you can see how the it works without running it on a development server.
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
